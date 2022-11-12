@@ -9,7 +9,7 @@ import java.util.Date;
 
 // below line is for setting table name.
 @Entity
-public class User {
+public class User  {
 
     @PrimaryKey(autoGenerate = true)
     private int id;

@@ -65,6 +65,7 @@ public class DoctorListPatientFragment extends Fragment {
 
         DoctorListPatientAdapter adapter=new DoctorListPatientAdapter(users);
         recview.setAdapter(adapter);
+
         return view;
 
 
