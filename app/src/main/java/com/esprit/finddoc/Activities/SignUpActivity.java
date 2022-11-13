@@ -53,7 +53,7 @@ public class SignUpActivity extends AppCompatActivity {
                     return;
                 }
                 else {
-                    User usr = new User(userName,userType,userAdress,userEmail,userPassword);
+                    User usr = new User(userName,userType,userAdress,userEmail,userPassword,false);
                     Log.d("username",userName);
                     Log.d("type",userType);
                     Log.d("email",userEmail);

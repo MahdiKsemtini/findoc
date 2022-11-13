@@ -30,9 +30,12 @@ public interface UserDao {
     @Query("SELECT * FROM User WHERE type='Doctor'")
     List<User> getAllDoctors();
 
+    @Query("SELECT * FROM User WHERE type='Patient'")
+    List<User> getAllPatients();
+
     @Query("DELETE FROM User WHERE id = :id")
     void deleteById(int id);
 
-    @Query("UPDATE User SET full_name = :fname, email=:lname WHERE id = :id")
-    void updateById(int id, String fname, String lname);
+    @Query("UPDATE User SET etat = :ett WHERE id = :id")
+    void updateById(int id, Boolean ett);
 }

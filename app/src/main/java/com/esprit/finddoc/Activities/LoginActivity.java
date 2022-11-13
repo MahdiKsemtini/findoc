@@ -13,6 +13,7 @@ import android.widget.EditText;
 import android.widget.TextView;
 import android.widget.Toast;
 
+import com.esprit.finddoc.Activities.Admin.AdminHome;
 import com.esprit.finddoc.Activities.Doctor.DoctorHome;
 import com.esprit.finddoc.Activities.Patient.PatientHome;
 import com.esprit.finddoc.R;
@@ -71,7 +72,15 @@ public class LoginActivity extends AppCompatActivity {
                             startActivity(new Intent(LoginActivity.this, PatientHome.class));
 
                         } else if (Objects.equals(u.getType(), "Doctor")) {
-                            startActivity(new Intent(LoginActivity.this, DoctorHome.class));
+                            if(Objects.equals((u.getEtat()),true)){
+                            startActivity(new Intent(LoginActivity.this, DoctorHome.class));}
+                            else{
+                                Toast.makeText(LoginActivity.this, "Your account has not been activated yet.", Toast.LENGTH_SHORT).show();
+                                return;
+                            }
+
+                        } else if (Objects.equals(u.getType(), "Admin")) {
+                            startActivity(new Intent(LoginActivity.this, AdminHome.class));
 
                         }
 

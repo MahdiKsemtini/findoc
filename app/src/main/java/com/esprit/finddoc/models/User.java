@@ -23,14 +23,17 @@ public class User  {
     private String email;
     @ColumnInfo(name = "password")
     private String password;
+    @ColumnInfo(name = "etat")
+    private Boolean etat;
 
 
-    public User(String fullName, String type, String adress, String email, String password) {
+    public User(String fullName, String type, String adress, String email, String password, Boolean etat) {
         this.fullName = fullName;
         this.type = type;
         this.adress = adress;
         this.email = email;
         this.password = password;
+        this.etat = etat;
     }
 
     public int getId() {
@@ -81,6 +84,13 @@ public class User  {
         this.password = password;
     }
 
+    public Boolean getEtat() {
+        return etat;
+    }
+
+    public void setEtat(Boolean etat) {
+        this.etat = etat;
+    }
 }
 
 
