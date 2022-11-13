@@ -1,66 +1,72 @@
 package com.esprit.finddoc.Activities.Doctor;
 
+import android.content.SharedPreferences;
 import android.os.Bundle;
 
 import androidx.fragment.app.Fragment;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
+import androidx.room.Room;
 
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.esprit.finddoc.R;
+import com.esprit.finddoc.adapters.DoctorAppointmentListAdapter;
+import com.esprit.finddoc.adapters.DoctorListPatientAdapter;
+import com.esprit.finddoc.dao.AppointmentDao;
+import com.esprit.finddoc.dao.UserDao;
+import com.esprit.finddoc.database.AppDatabase;
+import com.esprit.finddoc.models.Appointment;
+import com.esprit.finddoc.models.User;
 
-/**
- * A simple {@link Fragment} subclass.
- * Use the {@link ScheduleDoctorFragment#newInstance} factory method to
- * create an instance of this fragment.
- */
+import java.util.List;
+
+
 public class ScheduleDoctorFragment extends Fragment {
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
-
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
+    RecyclerView recview;
 
     public ScheduleDoctorFragment() {
         // Required empty public constructor
     }
 
-    /**
-     * Use this factory method to create a new instance of
-     * this fragment using the provided parameters.
-     *
-     * @param param1 Parameter 1.
-     * @param param2 Parameter 2.
-     * @return A new instance of fragment ScheduleDoctorFragment.
-     */
-    // TODO: Rename and change types and number of parameters
-    public static ScheduleDoctorFragment newInstance(String param1, String param2) {
-        ScheduleDoctorFragment fragment = new ScheduleDoctorFragment();
-        Bundle args = new Bundle();
-        args.putString(ARG_PARAM1, param1);
-        args.putString(ARG_PARAM2, param2);
-        fragment.setArguments(args);
-        return fragment;
-    }
+
 
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
     }
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container,
                              Bundle savedInstanceState) {
         // Inflate the layout for this fragment
-        return inflater.inflate(R.layout.fragment_schedule_doctor, container, false);
+        View view =  inflater.inflate(R.layout.fragment_schedule_doctor, container, false);
+
+        AppDatabase db = Room.databaseBuilder(this.getContext(),
+                AppDatabase.class, "room_db").allowMainThreadQueries().build();
+        AppointmentDao appointmentDao = db.appointmentDao();
+
+        recview=view.findViewById(R.id.recviewDoctorListAppointment);
+        recview.setLayoutManager(new LinearLayoutManager(this.getContext()));
+
+        SharedPreferences sh = this.getActivity().getSharedPreferences("MySharedPref", this.getContext().MODE_PRIVATE);
+
+
+        int id=sh.getInt("currentUserId", 0);
+
+        List<Appointment> appointments=appointmentDao.getAppointmentByDoctor(id);
+
+        DoctorAppointmentListAdapter adapter=new DoctorAppointmentListAdapter(appointments);
+        recview.setAdapter(adapter);
+
+        return view;
+
+
     }
+
+
 }

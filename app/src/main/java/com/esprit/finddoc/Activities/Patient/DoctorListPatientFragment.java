@@ -7,31 +7,30 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 import androidx.room.Room;
 
+import android.text.Editable;
+import android.text.TextWatcher;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.EditText;
 
 import com.esprit.finddoc.R;
 import com.esprit.finddoc.adapters.DoctorListPatientAdapter;
 import com.esprit.finddoc.dao.UserDao;
 import com.esprit.finddoc.database.AppDatabase;
 import com.esprit.finddoc.models.User;
+import com.google.android.material.textfield.TextInputEditText;
 
+import java.util.ArrayList;
 import java.util.List;
 
 
 public class DoctorListPatientFragment extends Fragment {
 
     RecyclerView recview;
+    EditText searchti;
 
-    // TODO: Rename parameter arguments, choose names that match
-    // the fragment initialization parameters, e.g. ARG_ITEM_NUMBER
-    private static final String ARG_PARAM1 = "param1";
-    private static final String ARG_PARAM2 = "param2";
 
-    // TODO: Rename and change types of parameters
-    private String mParam1;
-    private String mParam2;
 
     public DoctorListPatientFragment() {
         // Required empty public constructor
@@ -40,10 +39,7 @@ public class DoctorListPatientFragment extends Fragment {
     @Override
     public void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        if (getArguments() != null) {
-            mParam1 = getArguments().getString(ARG_PARAM1);
-            mParam2 = getArguments().getString(ARG_PARAM2);
-        }
+
 
 
     }
@@ -58,13 +54,42 @@ public class DoctorListPatientFragment extends Fragment {
                 AppDatabase.class, "room_db").allowMainThreadQueries().build();
         UserDao userDao = db.userDao();
 
+        searchti = view.findViewById(R.id.searchNameTV);
+
+
         recview=view.findViewById(R.id.recviewDoctorListPatient);
         recview.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         List<User> users=userDao.getAllDoctors();
 
+
+
+
         DoctorListPatientAdapter adapter=new DoctorListPatientAdapter(users);
         recview.setAdapter(adapter);
+
+        searchti.addTextChangedListener(new TextWatcher()
+        {
+            @Override
+            public void afterTextChanged(Editable mEdit)
+            {
+                List<User> filterusers = new ArrayList<User>();
+
+                for (User u : users) {
+                    if (u.getFullName().contains(mEdit.toString())) {
+                        filterusers.add(u);
+                    }
+                }
+
+                DoctorListPatientAdapter adapter1=new DoctorListPatientAdapter(filterusers);
+                recview.setAdapter(adapter1);
+
+            }
+
+            public void beforeTextChanged(CharSequence s, int start, int count, int after){}
+
+            public void onTextChanged(CharSequence s, int start, int before, int count){}
+        });
 
         return view;
 

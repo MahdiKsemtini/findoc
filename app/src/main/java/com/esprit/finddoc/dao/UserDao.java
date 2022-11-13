@@ -20,6 +20,9 @@ public interface UserDao {
     @Query("SELECT * FROM User WHERE email = :userEmail")
     User getUserByEmail(String userEmail);
 
+    @Query("SELECT * FROM User WHERE id = :userId")
+    User getUserById(int userId);
+
 
     @Query("SELECT * FROM User")
     List<User> getallusers();

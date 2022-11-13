@@ -4,6 +4,7 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.room.Room;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
@@ -28,7 +29,6 @@ public class LoginActivity extends AppCompatActivity {
 
 
     private EditText user_email,user_password;
-    private Button signInBtn;
     private User u;
 
     @Override
@@ -64,6 +64,7 @@ public class LoginActivity extends AppCompatActivity {
                 Boolean check=userDao.is_exist(userEmail);
                 if(check==true) {
                     u =userDao.getUserByEmail(userEmail);
+                    Log.d("userId",String.valueOf(u.getId()));
                     if ((Objects.equals(u.getEmail(), userEmail))&&(Objects.equals(u.getPassword(), userPassword))) {
                         if (Objects.equals(u.getType(), "Patient")) {
 
@@ -73,6 +74,11 @@ public class LoginActivity extends AppCompatActivity {
                             startActivity(new Intent(LoginActivity.this, DoctorHome.class));
 
                         }
+
+                        SharedPreferences sharedPreferences = getSharedPreferences("MySharedPref", MODE_PRIVATE);
+                        SharedPreferences.Editor myEdit = sharedPreferences.edit();
+                        myEdit.putInt("currentUserId", u.getId());
+                        myEdit.apply();
                     }
                     else{
                         Toast.makeText(LoginActivity.this, "Please enter the valid user credentials.", Toast.LENGTH_SHORT).show();

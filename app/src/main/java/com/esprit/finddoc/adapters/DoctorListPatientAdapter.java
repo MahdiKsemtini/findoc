@@ -43,6 +43,7 @@ public class DoctorListPatientAdapter extends RecyclerView.Adapter<DoctorListPat
         intent.putExtra("username",String.valueOf(users.get(position).getFullName()));
         intent.putExtra("useremail",String.valueOf(users.get(position).getEmail()));
         intent.putExtra("useradress",String.valueOf(users.get(position).getAdress()));
+        intent.putExtra("userid",users.get(position).getId());
 
         holder.docItem.setOnClickListener(new View.OnClickListener() {
             @Override
