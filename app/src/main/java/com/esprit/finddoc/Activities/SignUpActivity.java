@@ -9,6 +9,7 @@ import android.util.Log;
 import android.view.View;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.RadioButton;
 import android.widget.Toast;
 
 import com.esprit.finddoc.R;
@@ -19,9 +20,10 @@ import com.google.android.material.textfield.TextInputEditText;
 
 public class SignUpActivity extends AppCompatActivity {
 
-    private TextInputEditText user_name, user_type, user_email, user_adress;
+    private TextInputEditText user_name, user_email, user_adress;
     private EditText user_password;
     private Button signUpBtn;
+    private String userType;
 
 
     @Override
@@ -30,7 +32,6 @@ public class SignUpActivity extends AppCompatActivity {
         setContentView(R.layout.activity_sign_up);
 
         user_name = findViewById(R.id.editTextName);
-        user_type = findViewById(R.id.editTextType);
         user_email = findViewById(R.id.editTextEmail);
         user_password = findViewById(R.id.editTextPassword);
         user_adress = findViewById(R.id.editTextAdresse);
@@ -44,7 +45,7 @@ public class SignUpActivity extends AppCompatActivity {
                 // getting text value from edittext and validating if
                 // the text fields are empty or not.
                 String userName = user_name.getText().toString();
-                String userType = user_type.getText().toString();
+
                 String userEmail = user_email.getText().toString();
                 String userPassword = user_password.getText().toString();
                 String userAdress = user_adress.getText().toString();
@@ -74,6 +75,23 @@ public class SignUpActivity extends AppCompatActivity {
         });
 
 
+    }
+
+    public void onRadioButtonClicked(View view) {
+        // Is the button now checked?
+        boolean checked = ((RadioButton) view).isChecked();
+
+        // Check which radio button was clicked
+        switch(view.getId()) {
+            case R.id.radio_patient:
+                if (checked)
+                    userType="Patient";
+                    break;
+            case R.id.radio_doctor:
+                if (checked)
+                    userType="Doctor";
+                    break;
+        }
     }
 
 }

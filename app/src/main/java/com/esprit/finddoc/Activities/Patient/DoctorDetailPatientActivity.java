@@ -7,9 +7,11 @@ import android.app.DatePickerDialog;
 import android.app.TimePickerDialog;
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.net.Uri;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.DatePicker;
 import android.widget.EditText;
@@ -32,7 +34,7 @@ import java.util.Calendar;
 public class DoctorDetailPatientActivity extends AppCompatActivity {
 
     private TextView docName,docEmail,docAdress;
-    private Button bookBtn,btnTime,btnDate;
+    private Button bookBtn,btnTime,btnDate,mapsBtn;
     private EditText txtDate, txtTime;
 
     private int mYear, mMonth, mDay, mHour, mMinute;
@@ -51,6 +53,8 @@ public class DoctorDetailPatientActivity extends AppCompatActivity {
         btnDate = (Button)findViewById(R.id.btn_date);
         btnTime = (Button)findViewById(R.id.btn_time);
         bookBtn = (Button)findViewById(R.id.bookAppBtn);
+        mapsBtn = (Button)findViewById(R.id.btnmaps);
+
 
 
         SharedPreferences sh = getSharedPreferences("MySharedPref", MODE_PRIVATE);
@@ -142,6 +146,18 @@ public class DoctorDetailPatientActivity extends AppCompatActivity {
                         return;
                     }
                 }
+
+            }
+        });
+
+        mapsBtn.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                // getting text value from edittext and validating if
+                // the text fields are empty or not.
+                Uri location = Uri.parse("geo:0,0?q="+extras.getString("useradress"));
+                Intent mapIntent = new Intent(Intent.ACTION_VIEW, location);
+                DoctorDetailPatientActivity.this.startActivity(mapIntent);
 
             }
         });

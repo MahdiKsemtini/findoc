@@ -5,6 +5,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.TextView;
 
@@ -79,15 +80,14 @@ public class AdminDoctorListAdapter extends RecyclerView.Adapter<AdminDoctorList
     {
         TextView docName,docEmail, docAdress;
         LinearLayout docItem;
-        Button checketat;
+        ImageView checketat;
         public myviewholder(@NonNull @NotNull View itemView) {
             super(itemView);
 
             docName=itemView.findViewById(R.id.DoctorNameAdmin);
             docEmail=itemView.findViewById(R.id.DoctorEmailAdmin);
             docAdress=itemView.findViewById(R.id.DoctorAdressAdmin);
-            docItem=itemView.findViewById(R.id.idDoctorItemAdmin);
-            checketat=(Button) itemView.findViewById(R.id.checketatbutton);
+            checketat=(ImageView) itemView.findViewById(R.id.checketatbutton);
         }
     }
 }

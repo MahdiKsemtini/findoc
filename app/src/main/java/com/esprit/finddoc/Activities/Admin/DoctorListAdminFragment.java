@@ -21,6 +21,8 @@ import com.esprit.finddoc.database.AppDatabase;
 import com.esprit.finddoc.models.Appointment;
 import com.esprit.finddoc.models.User;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 public class DoctorListAdminFragment extends Fragment {
@@ -53,6 +55,12 @@ public class DoctorListAdminFragment extends Fragment {
         recview.setLayoutManager(new LinearLayoutManager(this.getContext()));
 
         List<User> users=userDao.getAllDoctors();
+        Collections.sort(users, new Comparator<User>() {
+            @Override
+            public int compare(User u1, User u2) {
+                return u1.getEtat().compareTo(u2.getEtat());
+            }
+        });
 
         AdminDoctorListAdapter adapter=new AdminDoctorListAdapter(users);
         recview.setAdapter(adapter);

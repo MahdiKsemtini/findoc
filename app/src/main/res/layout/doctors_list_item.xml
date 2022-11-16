@@ -6,6 +6,7 @@
     android:layout_height="wrap_content"
     android:layout_margin="5dp"
     android:elevation="8dp"
+    app:cardBackgroundColor="#80B2D7"
     app:cardCornerRadius="8dp">
 
     <LinearLayout
@@ -22,8 +23,9 @@
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:text="Doctor Name"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textColor="@color/white"
+            android:textStyle="bold|italic"
+            android:textSize="20sp" />
 
         <!--text view for our course duration-->
         <TextView
@@ -32,8 +34,8 @@
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:text="Doctor Email"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textColor="@color/white"
+            android:textSize="16sp" />
 
         <!--text view for our course description-->
         <TextView
@@ -42,8 +44,8 @@
             android:layout_height="wrap_content"
             android:padding="8dp"
             android:text="Doctor Adress"
-            android:textColor="@color/black"
-            android:textSize="15sp" />
+            android:textColor="@color/white"
+            android:textSize="16sp" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>
