@@ -34,7 +34,7 @@ import java.util.Calendar;
 public class DoctorDetailPatientActivity extends AppCompatActivity {
 
     private TextView docName,docEmail,docAdress;
-    private Button bookBtn,btnTime,btnDate,mapsBtn;
+    private Button bookBtn,btnTime,btnDate;
     private EditText txtDate, txtTime;
 
     private int mYear, mMonth, mDay, mHour, mMinute;
@@ -53,7 +53,6 @@ public class DoctorDetailPatientActivity extends AppCompatActivity {
         btnDate = (Button)findViewById(R.id.btn_date);
         btnTime = (Button)findViewById(R.id.btn_time);
         bookBtn = (Button)findViewById(R.id.bookAppBtn);
-        mapsBtn = (Button)findViewById(R.id.btnmaps);
 
 
 
@@ -150,17 +149,7 @@ public class DoctorDetailPatientActivity extends AppCompatActivity {
             }
         });
 
-        mapsBtn.setOnClickListener(new View.OnClickListener() {
-            @Override
-            public void onClick(View v) {
-                // getting text value from edittext and validating if
-                // the text fields are empty or not.
-                Uri location = Uri.parse("geo:0,0?q="+extras.getString("useradress"));
-                Intent mapIntent = new Intent(Intent.ACTION_VIEW, location);
-                DoctorDetailPatientActivity.this.startActivity(mapIntent);
 
-            }
-        });
 
     }
 }

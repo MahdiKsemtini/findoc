@@ -131,19 +131,6 @@
                     app:layout_constraintLeft_toLeftOf="parent"/>
             </LinearLayout>
 
-            <Button
-                android:id="@+id/btnmaps"
-                android:layout_width="200dp"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginTop="16dp"
-                android:backgroundTint="#CD2A42"
-                android:text="open in maps"
-                android:textAllCaps="false"
-                android:textColor="#ffffff"
-                android:textSize="18sp"
-                android:textStyle="bold" />
-
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
