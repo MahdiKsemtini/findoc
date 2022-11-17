@@ -18,15 +18,33 @@
             android:layout_marginTop="5dp"
             android:orientation="vertical">
 
-            <TextView
-                android:layout_width="wrap_content"
+            <LinearLayout
+                android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:layout_gravity="center"
-                android:layout_marginBottom="12dp"
-                android:text="Doctors List"
-                android:textColor="#CD2A42"
-                android:textSize="26sp"
-                android:textStyle="bold" />
+                android:layout_marginTop="5dp"
+                android:layout_marginHorizontal="10dp"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginBottom="12dp"
+                    android:text="Doctors List"
+                    android:textColor="#CD2A42"
+                    android:textSize="26sp"
+                    android:textStyle="bold" />
+                <Space
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="match_parent" />
+
+                <ImageView
+                    android:id="@+id/buttonlogout2"
+                    android:background="#CD2A42"
+                    android:layout_width="50dp"
+                    android:layout_height="50dp"
+                    android:src="@android:drawable/ic_lock_power_off" />
+            </LinearLayout>
 
             <!-- TODO: Update blank fragment layout -->
             <androidx.recyclerview.widget.RecyclerView

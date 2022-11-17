@@ -1,5 +1,6 @@
 package com.esprit.finddoc.Activities.Admin;
 
+import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 
@@ -11,7 +12,9 @@ import androidx.room.Room;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ImageView;
 
+import com.esprit.finddoc.Activities.MainActivity;
 import com.esprit.finddoc.R;
 import com.esprit.finddoc.adapters.AdminDoctorListAdapter;
 import com.esprit.finddoc.adapters.DoctorAppointmentListAdapter;
@@ -28,6 +31,7 @@ import java.util.List;
 public class DoctorListAdminFragment extends Fragment {
 
     RecyclerView recview;
+    ImageView btnlogout;
 
 
     public DoctorListAdminFragment() {
@@ -53,6 +57,7 @@ public class DoctorListAdminFragment extends Fragment {
 
         recview=view.findViewById(R.id.recviewDoctorListAdmin);
         recview.setLayoutManager(new LinearLayoutManager(this.getContext()));
+        btnlogout=view.findViewById(R.id.buttonlogout2);
 
         List<User> users=userDao.getAllDoctors();
         Collections.sort(users, new Comparator<User>() {
@@ -64,6 +69,22 @@ public class DoctorListAdminFragment extends Fragment {
 
         AdminDoctorListAdapter adapter=new AdminDoctorListAdapter(users);
         recview.setAdapter(adapter);
+
+        SharedPreferences sh = this.getActivity().getSharedPreferences("MySharedPref", this.getContext().MODE_PRIVATE);
+
+        btnlogout.setOnClickListener(
+                new View.OnClickListener() {
+                    @Override
+                    public void onClick(View view) {
+
+                        sh.edit().clear().apply();
+                        Intent intent = new Intent(btnlogout.getContext(), MainActivity.class);
+                        intent.addFlags(Intent.FLAG_ACTIVITY_CLEAR_TOP);
+                        startActivity(intent);
+
+                    }
+                }
+        );
 
         return view;
 
