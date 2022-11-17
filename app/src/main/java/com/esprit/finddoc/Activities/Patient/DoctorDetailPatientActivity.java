@@ -1,14 +1,22 @@
 package com.esprit.finddoc.Activities.Patient;
 
+import static com.esprit.finddoc.Activities.MainActivity.NOTIFICATION_CHANNEL_ID;
+
 import androidx.appcompat.app.AppCompatActivity;
+import androidx.core.app.NotificationCompat;
 import androidx.room.Room;
 
+import android.app.AlarmManager;
 import android.app.DatePickerDialog;
+import android.app.Notification;
+import android.app.PendingIntent;
 import android.app.TimePickerDialog;
+import android.content.Context;
 import android.content.Intent;
 import android.content.SharedPreferences;
 import android.net.Uri;
 import android.os.Bundle;
+import android.os.SystemClock;
 import android.util.Log;
 import android.view.View;
 import android.webkit.WebView;
@@ -27,11 +35,13 @@ import com.esprit.finddoc.dao.AppointmentDao;
 import com.esprit.finddoc.dao.UserDao;
 import com.esprit.finddoc.database.AppDatabase;
 import com.esprit.finddoc.models.Appointment;
+import com.esprit.finddoc.models.MyNotificationPublisher;
 import com.esprit.finddoc.models.User;
 
 import java.util.Calendar;
 
 public class DoctorDetailPatientActivity extends AppCompatActivity {
+    private final static String default_notification_channel_id = "default" ;
 
     private TextView docName,docEmail,docAdress;
     private Button bookBtn,btnTime,btnDate;
@@ -138,6 +148,7 @@ public class DoctorDetailPatientActivity extends AppCompatActivity {
                     if(check==false) {
                         appointmentDao.insertrecord(apn);
                         Toast.makeText(DoctorDetailPatientActivity.this, "Appointment booked successfully", Toast.LENGTH_SHORT).show();
+                        scheduleNotification(getNotification( "Your Appointment with Doctor : "+docName.getText()+" is tomorow!" ) , 30000 ) ;
                         return;
                     }
                     else {
@@ -152,4 +163,25 @@ public class DoctorDetailPatientActivity extends AppCompatActivity {
 
 
     }
+
+    private void scheduleNotification (Notification notification , int delay) {
+        Intent notificationIntent = new Intent( this, MyNotificationPublisher. class ) ;
+        notificationIntent.putExtra(MyNotificationPublisher. NOTIFICATION_ID , 1 ) ;
+        notificationIntent.putExtra(MyNotificationPublisher. NOTIFICATION , notification) ;
+        PendingIntent pendingIntent = PendingIntent. getBroadcast ( this, 0 , notificationIntent , PendingIntent. FLAG_UPDATE_CURRENT ) ;
+        long futureInMillis = SystemClock. elapsedRealtime () + delay ;
+        AlarmManager alarmManager = (AlarmManager) getSystemService(Context. ALARM_SERVICE ) ;
+        assert alarmManager != null;
+        alarmManager.set(AlarmManager. ELAPSED_REALTIME_WAKEUP , futureInMillis , pendingIntent) ;
+    }
+    private Notification getNotification (String content) {
+        NotificationCompat.Builder builder = new NotificationCompat.Builder( this, default_notification_channel_id ) ;
+        builder.setContentTitle( "Appointment reminder" ) ;
+        builder.setContentText(content) ;
+        builder.setSmallIcon(R.drawable. ic_launcher_foreground ) ;
+        builder.setAutoCancel( true ) ;
+        builder.setChannelId( NOTIFICATION_CHANNEL_ID ) ;
+        return builder.build() ;
+    }
 }
+

@@ -18,6 +18,7 @@ import com.esprit.finddoc.models.User;
 import org.w3c.dom.Text;
 
 public class MainActivity extends AppCompatActivity {
+    public static final String NOTIFICATION_CHANNEL_ID = "10001" ;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
